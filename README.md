@@ -3,7 +3,7 @@
 ## How to use
 * `test.h`
 ```c
-#include "vector.h"
+#include "cctl/vector.h"
 
 cctl_fd(int);
 cctl_imp_h(int);
