@@ -67,6 +67,6 @@ int main(void) {
 * `bool list_pop_front(T, list(T)* p_v)`
 * `bool list_push_back(T, list(T)* p_v, T item)`
 * `bool list_pop_back(T, list(T)* p_v)`
-* `T* list_at(T, list(T)* p_v, size_t index)` *not implemented*
-* `T* list_front(T, list(T)* p_v)` *not implemented*
-* `T* list_back(T, list(T)* p_v)` *not implemented*
+* `T* list_at(T, list(T)* p_v, size_t index)`
+* `T* list_front(T, list(T)* p_v)`
+* `T* list_back(T, list(T)* p_v)`
