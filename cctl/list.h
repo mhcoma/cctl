@@ -38,10 +38,10 @@
 #define list_pop_back(TYPE, p_l) list_func(pop_back, TYPE)(p_l)
 #define list_at(TYPE, p_l, index) list_func(at, TYPE)(p_l, index)
 
-#define list_node_front(TYPE, p_l) (p_l)->p_front
-#define list_node_back(TYPE, p_l) (p_l)->p_back
-#define list_front(TYPE, p_l) &(list_node_front(TYPE, p_l)->data)
-#define list_back(TYPE, p_l) &(list_node_back(TYPE, p_l)->data)
+#define list_node_front(TYPE, p_l) ((p_l)->p_front)
+#define list_node_back(TYPE, p_l) ((p_l)->p_back)
+#define list_front(TYPE, p_l) (&(list_node_front(TYPE, p_l)->data))
+#define list_back(TYPE, p_l) (&(list_node_back(TYPE, p_l)->data))
 
 #define list_fd(TYPE) \
 	typedef struct list_struct(TYPE) list(TYPE);
