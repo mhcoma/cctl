@@ -13,8 +13,8 @@
 #define chunk_func(FUNC, TYPE) cctl_join(chunk(TYPE), FUNC)
 #define chunk_struct(TYPE) cctl_join(chunk(TYPE), struct)
 
-#define chunk_front(T, p_c) (p_c)->p_data + (p_c)->begin;
-#define chunk_back(T, p_c) (p_c)->p_data + (p_c)->end;
+#define chunk_front(T, p_c) ((p_c)->p_data + (p_c)->begin)
+#define chunk_back(T, p_c) ((p_c)->p_data + (p_c)->end)
 
 #define chunk_imp_h(TYPE) \
 	typedef struct chunk_struct(TYPE) chunk(TYPE); \
