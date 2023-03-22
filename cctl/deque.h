@@ -153,8 +153,8 @@
 
 #define deque_chunk_front(TYPE, p_d) ((p_d)->p_data + (p_d)->chunk_begin)
 #define deque_chunk_back(TYPE, p_d) ((p_d)->p_data + (p_d)->chunk_end)
-#define deque_front(TYPE, p_d) chunk_front(TYPE, deque_chunk_front(TYPE, p_d))
-#define deque_back(TYPE, p_d) chunk_back(TYPE, deque_chunk_back(TYPE, p_d))
+#define deque_front(TYPE, p_d) ((p_d)->size ? chunk_front(TYPE, deque_chunk_front(TYPE, p_d)) : NULL)
+#define deque_back(TYPE, p_d) ((p_d)->size ? chunk_back(TYPE, deque_chunk_back(TYPE, p_d)) : NULL)
 
 #define deque_fd(TYPE) \
 	typedef struct deque_struct(TYPE) deque(TYPE);

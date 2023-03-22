@@ -21,7 +21,7 @@
 
 #define vector_at(TYPE, p_v, index) ((p_v)->p_data + index)
 #define vector_front(TYPE, p_v) ((p_v)->p_data)
-#define vector_back(TYPE, p_v) ((p_v)->p_data + (p_v)->size - 1)
+#define vector_back(TYPE, p_v) ((p_v)->p_data + (p_v)->size - ((p_v)->size ? 1 : 0))
 
 #define vector_fd(TYPE) \
 	typedef struct vector_struct(TYPE) vector(TYPE);
