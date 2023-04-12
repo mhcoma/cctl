@@ -32,6 +32,7 @@ int main(void) {
 ```
 
 ## vector(T)
+`cctl/vector.h`
 * `size_t size`
 * `size_t capacity`
 * `void vector_init(T, vector(T)* p_v)`
@@ -46,6 +47,7 @@ int main(void) {
 * `T* vector_back(T, vector(T)* p_v)`
 
 ## deque(T)
+`cctl/deque.h`
 * `size_t size`
 * `void  deque_init(T, deque(T)* p_v)`
 * `void deque_free(T, deque(T)* p_v)`
@@ -60,6 +62,7 @@ int main(void) {
 * `T* deque_back(T, deque(T)* p_v)`
 
 ## list(T)
+`cctl/list.h`
 * `size_t size`
 * `void list_init(T, list(T)* p_v)`
 * `void list_free(T, list(T)* p_v)`
@@ -75,8 +78,16 @@ int main(void) {
 * `node(T)* list_node_back(T, list(T)* p_v)`
 
 ## trie(T)
+`cctl/trie.h`
 * `void trie_init(T, trie(T)* p_t)`
 * `void trie_free(T, trie(T)* p_t)`
 * `T* trie_insert(T, trie(T)* p_t, const char* key, T item)`
 * `void trie_remove(T, trie(T)* p_t, const char* key)`
 * `T* trie_find(T, trie(T)* p_t, const char* key)`
+
+## Utils
+`cctl/cctl.h`
+* `cctl_concat(A, B)` => `AB`
+* `cctl_join(A, B)` => `A_B`
+* `cctl_ptr_def(T)` => `typedef T *cctl_ptr(T)`
+* `cctl_ptr` => `cctl_join(TYPE, ptr)`
