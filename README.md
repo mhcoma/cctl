@@ -70,6 +70,9 @@ int main(void) {
 * `T* list_at(T, list(T)* p_v, size_t index)`
 * `T* list_front(T, list(T)* p_v)`
 * `T* list_back(T, list(T)* p_v)`
+* `node(T)* list_node_at(T, list(T)* p_v, size_t index)`
+* `node(T)* list_node_front(T, list(T)* p_v)`
+* `node(T)* list_node_back(T, list(T)* p_v)`
 
 ## trie(T)
 * `void trie_init(T, trie(T)* p_t)`
