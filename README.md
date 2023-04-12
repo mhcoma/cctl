@@ -70,3 +70,10 @@ int main(void) {
 * `T* list_at(T, list(T)* p_v, size_t index)`
 * `T* list_front(T, list(T)* p_v)`
 * `T* list_back(T, list(T)* p_v)`
+
+## trie(T)
+* `void trie_init(T, trie(T)* p_t)`
+* `void trie_free(T, trie(T)* p_t)`
+* `T* trie_insert(T, trie(T)* p_t, const char* key, T item)`
+* `void trie_remove(T, trie(T)* p_t, const char* key)` *not implemented*
+* `T* trie_find(T, trie(T)* p_t, const char* key)`
