@@ -114,14 +114,8 @@
 	} \
 	TYPE* trie_func(find, TYPE)(trie(TYPE)* p_t, const char* key) { \
 		if (!(*key)) { \
-			if (p_t->existence) { \
-				puts("존재한다!"); \
-				return &(p_t->data); \
-			} \
-			else { \
-				puts("존재하지않는다!"); \
-				return NULL; \
-			} \
+			if (p_t->existence) return &(p_t->data); \
+			else return NULL; \
 		} \
 		if (!(p_t->children[(uint8_t) *key])) { \
 			return NULL; \
