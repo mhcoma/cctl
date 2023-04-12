@@ -75,5 +75,5 @@ int main(void) {
 * `void trie_init(T, trie(T)* p_t)`
 * `void trie_free(T, trie(T)* p_t)`
 * `T* trie_insert(T, trie(T)* p_t, const char* key, T item)`
-* `void trie_remove(T, trie(T)* p_t, const char* key)` *not implemented*
+* `void trie_remove(T, trie(T)* p_t, const char* key)`
 * `T* trie_find(T, trie(T)* p_t, const char* key)`
