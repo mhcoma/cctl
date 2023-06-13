@@ -32,7 +32,8 @@ int main(void) {
 ```
 
 ## vector(T)
-`cctl/vector.h`
+Dynamic array
+* `cctl/vector.h`
 * `size_t size`
 * `size_t capacity`
 * `void vector_init(T, vector(T)* p_v)`
@@ -47,7 +48,8 @@ int main(void) {
 * `T* vector_back(T, vector(T)* p_v)`
 
 ## deque(T)
-`cctl/deque.h`
+Dynamic double-ended queue
+* `cctl/deque.h`
 * `size_t size`
 * `void  deque_init(T, deque(T)* p_v)`
 * `void deque_free(T, deque(T)* p_v)`
@@ -62,7 +64,8 @@ int main(void) {
 * `T* deque_back(T, deque(T)* p_v)`
 
 ## list(T)
-`cctl/list.h`
+Doubly linked list
+* `cctl/list.h`
 * `size_t size`
 * `void list_init(T, list(T)* p_v)`
 * `void list_free(T, list(T)* p_v)`
@@ -78,12 +81,22 @@ int main(void) {
 * `node(T)* list_node_back(T, list(T)* p_v)`
 
 ## trie(T)
-`cctl/trie.h`
+Trie
+* `cctl/trie.h`
 * `void trie_init(T, trie(T)* p_t)`
 * `void trie_free(T, trie(T)* p_t)`
 * `T* trie_insert(T, trie(T)* p_t, const char* key, T item)`
 * `void trie_remove(T, trie(T)* p_t, const char* key)`
 * `T* trie_find(T, trie(T)* p_t, const char* key)`
+
+## rbt(T)
+Red-black tree
+* `cctl/rbt.h`
+* `void rbt_init(T, rbt(T)* p_r)`
+* `void rbt_free(T, rbt(T)* p_r)`
+* `bool rbt_insert(T, rbt(T)* p_r, size_t index, T item)`
+* `T* rbt_find(T, rbt(T)* p_r, size_t index)`
+* `void rbt_delete(T, rbt(T)* p_r, size_t index)`
 
 ## Utils
 `cctl/cctl.h`
@@ -91,3 +104,4 @@ int main(void) {
 * `cctl_join(A, B)` => `A_B`
 * `cctl_ptr_def(T)` => `typedef T *cctl_ptr(T)`
 * `cctl_ptr` => `cctl_join(TYPE, ptr)`
+* `cctl_num_args(...)` => Return count of `...`
