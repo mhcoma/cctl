@@ -103,5 +103,5 @@ Red-black tree
 * `cctl_concat(A, B)` => `AB`
 * `cctl_join(A, B)` => `A_B`
 * `cctl_ptr_def(T)` => `typedef T *cctl_ptr(T)`
-* `cctl_ptr` => `cctl_join(TYPE, ptr)`
+* `cctl_ptr(T)` => `T_ptr`
 * `cctl_num_args(...)` => Return count of `...`
