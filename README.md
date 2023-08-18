@@ -51,7 +51,7 @@ Dynamic array
 Dynamic double-ended queue
 * `cctl/deque.h`
 * `size_t size`
-* `void  deque_init(T, deque(T)* p_v)`
+* `void deque_init(T, deque(T)* p_v)`
 * `void deque_free(T, deque(T)* p_v)`
 * `void deque_clear(T, deque(T)* p_v)`
 * `bool deque_resize(T, deque(T)* p_v, size_t size)`
@@ -89,7 +89,7 @@ Trie
 * `void trie_remove(T, trie(T)* p_t, const char* key)`
 * `T* trie_find(T, trie(T)* p_t, const char* key)`
 
-## rbt(T)
+## rbt(T)p
 Red-black tree
 * `cctl/rbt.h`
 * `void rbt_init(T, rbt(T)* p_r)`
