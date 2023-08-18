@@ -89,7 +89,7 @@ Trie
 * `void trie_remove(T, trie(T)* p_t, const char* key)`
 * `T* trie_find(T, trie(T)* p_t, const char* key)`
 
-## rbt(T)p
+## rbt(T)
 Red-black tree
 * `cctl/rbt.h`
 * `void rbt_init(T, rbt(T)* p_r)`
