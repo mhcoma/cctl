@@ -6,14 +6,14 @@
 #include "cctl/vector.h"
 
 cctl_fd(int);
-cctl_imp_h(int);
+vector_imp_h(int);
 ```
 
 * `main.c`
 ```c
 #include "test.h"
 
-cctl_imp_c(int);
+vector_imp_c(int);
 
 int main(void) {
 	vector(int) v;
