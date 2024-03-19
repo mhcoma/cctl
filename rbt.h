@@ -163,6 +163,7 @@
 		p_n->index = index; \
 		p_n->data = data; \
 		rbt_func(insert_node, TYPE)(p_r, p_n); \
+		return true; \
 	} \
 	void rbt_func(transplant, TYPE)(rbt(TYPE)* p_r, rbt_node(TYPE)* p_u, rbt_node(TYPE)* p_v) { \
 		if (p_u->p_parent == p_r->p_nil) p_r->p_root = p_v; \
