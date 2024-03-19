@@ -6,14 +6,14 @@
 #include "cctl/vector.h"
 
 cctl_fd(int);
-cctl_imp_h(int);
+vector_imp_h(int);
 ```
 
 * `main.c`
 ```c
 #include "test.h"
 
-cctl_imp_c(int);
+vector_imp_c(int);
 
 int main(void) {
 	vector(int) v;
@@ -51,7 +51,7 @@ Dynamic array
 Dynamic double-ended queue
 * `cctl/deque.h`
 * `size_t size`
-* `void  deque_init(T, deque(T)* p_v)`
+* `void deque_init(T, deque(T)* p_v)`
 * `void deque_free(T, deque(T)* p_v)`
 * `void deque_clear(T, deque(T)* p_v)`
 * `bool deque_resize(T, deque(T)* p_v, size_t size)`
