@@ -5,7 +5,6 @@
 ```c
 #include "cctl/vector.h"
 
-cctl_fd(int);
 vector_imp_h(int);
 ```
 
