@@ -280,7 +280,9 @@
 		return rbt_func(find_node_recurse, TYPE)(p_r, p_r->p_root, index); \
 	} \
 	TYPE* rbt_func(find, TYPE)(rbt(TYPE)* p_r, size_t index) { \
-		return &(rbt_func(find_node, TYPE)(p_r, index)->data);\
+		rbt_node(TYPE)* node = rbt_func(find_node, TYPE)(p_r, index); \
+		if (!node) return NULL; \
+		return &(node->data); \
 	} \
 	void rbt_func(free_recurse, TYPE)(rbt(TYPE)* p_r, rbt_node(TYPE)* p_n) { \
 		if (p_n != p_r->p_nil) { \
