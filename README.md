@@ -91,7 +91,7 @@ Trie
 ## rbt(T)
 Red-black tree
 * `cctl/rbt.h`
-* `void rbt_init(T, rbt(T)* p_r)`
+* `bool rbt_init(T, rbt(T)* p_r)`
 * `void rbt_free(T, rbt(T)* p_r)`
 * `bool rbt_insert(T, rbt(T)* p_r, size_t index, T item)`
 * `T* rbt_find(T, rbt(T)* p_r, size_t index)`
