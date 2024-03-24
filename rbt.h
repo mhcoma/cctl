@@ -294,7 +294,8 @@
 	void rbt_func(free, TYPE)(rbt(TYPE)* p_r) { \
 		rbt_func(free_recurse, TYPE)(p_r, p_r->p_root); \
 		free(p_r->p_nil); \
-		rbt_func(init, TYPE)(p_r); \
+		p_r->p_root = NULL; \
+		p_r->p_nil = NULL; \
 	}
 
 #endif
