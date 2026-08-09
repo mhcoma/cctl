@@ -267,17 +267,14 @@
 		if (!p_n) return; \
 		rbt_func(delete_node, TYPE)(p_r, p_n); \
 	} \
-	rbt_node(TYPE)* rbt_func(find_node_recurse, TYPE)(rbt(TYPE)* p_r, rbt_node(TYPE)* p_n, size_t index) { \
-		rbt_node(TYPE)* p_result = NULL; \
-		if (p_n != p_r->p_nil) { \
-			if (p_n->index == index) return p_n; \
-			p_result = rbt_func(find_node_recurse, TYPE)(p_r, p_n->p_left, index); \
-			if (!p_result) p_result = rbt_func(find_node_recurse, TYPE)(p_r, p_n->p_right, index); \
-		} \
-		return p_result; \
-	} \
 	rbt_node(TYPE)* rbt_func(find_node, TYPE)(rbt(TYPE)* p_r, size_t index) { \
-		return rbt_func(find_node_recurse, TYPE)(p_r, p_r->p_root, index); \
+		rbt_node(TYPE)* p_temp = p_r->p_root; \
+		while (p_temp != p_r->p_nil) { \
+			if (p_temp->index == index) return p_temp; \
+			else if (p_temp->index > index) p_temp = p_temp->p_left; \
+			else p_temp = p_temp->p_right; \
+		} \
+		return NULL; \
 	} \
 	TYPE* rbt_func(find, TYPE)(rbt(TYPE)* p_r, size_t index) { \
 		rbt_node(TYPE)* node = rbt_func(find_node, TYPE)(p_r, index); \
