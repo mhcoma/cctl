@@ -79,14 +79,14 @@ Doubly linked list
 * `node(T)* list_node_front(T, list(T)* p_v)`
 * `node(T)* list_node_back(T, list(T)* p_v)`
 
-## trie(T)
-Trie
-* `cctl/trie.h`
-* `void trie_init(T, trie(T)* p_t)`
-* `void trie_free(T, trie(T)* p_t)`
-* `T* trie_insert(T, trie(T)* p_t, const char* key, T item)`
-* `void trie_remove(T, trie(T)* p_t, const char* key)`
-* `T* trie_find(T, trie(T)* p_t, const char* key)`
+## trie256(T)
+Radix-256 Trie
+* `cctl/trie256.h`
+* `void trie256_init(T, trie(T)* p_t)`
+* `void trie256_free(T, trie(T)* p_t)`
+* `T* trie256_insert(T, trie(T)* p_t, const char* key, T item)`
+* `void trie256_remove(T, trie(T)* p_t, const char* key)`
+* `T* trie256_find(T, trie(T)* p_t, const char* key)`
 
 ## rbt(T)
 Red-black tree
