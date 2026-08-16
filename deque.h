@@ -52,7 +52,7 @@
 	bool chunk_func(push_front, TYPE)(chunk(TYPE)* p_c, TYPE item) { \
 		if (p_c->size == cctl_deque_chunk_max) return false; \
 		if (!p_c->p_data) { \
-			if (!(p_c->p_data = (TYPE*)malloc(cctl_deque_chunk_max * sizeof(TYPE)))) return false; \
+			if (!(p_c->p_data = (TYPE*) malloc(cctl_deque_chunk_max * sizeof(TYPE)))) return false; \
 		} \
 		p_c->begin = (p_c->begin + cctl_deque_chunk_max - 1) % cctl_deque_chunk_max; \
 		*(p_c->p_data + p_c->begin) = item; \
@@ -63,7 +63,7 @@
 	bool chunk_func(push_back, TYPE)(chunk(TYPE)* p_c, TYPE item) { \
 		if (p_c->size == cctl_deque_chunk_max) return false; \
 		if (!p_c->p_data) { \
-			if (!(p_c->p_data = (TYPE*)malloc(cctl_deque_chunk_max * sizeof(TYPE)))) return false; \
+			if (!(p_c->p_data = (TYPE*) malloc(cctl_deque_chunk_max * sizeof(TYPE)))) return false; \
 		} \
 		size_t end_idx = (p_c->begin + p_c->size) % cctl_deque_chunk_max; \
 		*(p_c->p_data + end_idx) = item; \
@@ -143,22 +143,22 @@
 	\
 	bool deque_chunk_func(reserve, TYPE)(deque(TYPE)* p_d, size_t size) { \
 		if (p_d->chunk_capacity >= size) return true; \
-		size_t new_cap = p_d->chunk_capacity == 0 ? 4 : p_d->chunk_capacity; \
-		while (new_cap < size) new_cap <<= 1; \
-		chunk(TYPE)* new_map = (chunk(TYPE)*)calloc(new_cap, sizeof(chunk(TYPE))); \
-		if (!new_map) return false; \
+		size_t capacity = p_d->chunk_capacity == 0 ? 4 : p_d->chunk_capacity; \
+		while (capacity < size) capacity <<= 1; \
+		chunk(TYPE)* p_new_data = (chunk(TYPE)*)calloc(capacity, sizeof(chunk(TYPE))); \
+		if (!p_new_data) return false; \
 		for (size_t i = 0; i < p_d->chunk_count; i++) { \
-			size_t old_idx = (p_d->chunk_begin + i) % p_d->chunk_capacity; \
-			new_map[i] = p_d->p_data[old_idx]; \
-			p_d->p_data[old_idx].p_data = NULL; \
+			size_t old_index = (p_d->chunk_begin + i) % p_d->chunk_capacity; \
+			p_new_data[i] = p_d->p_data[old_index]; \
+			p_d->p_data[old_index].p_data = NULL; \
 		} \
 		for (size_t i = 0; i < p_d->chunk_capacity; i++) { \
 			if (p_d->p_data[i].p_data) free(p_d->p_data[i].p_data); \
 		} \
 		free(p_d->p_data); \
-		p_d->p_data = new_map; \
+		p_d->p_data = p_new_data; \
 		p_d->chunk_begin = 0; \
-		p_d->chunk_capacity = new_cap; \
+		p_d->chunk_capacity = capacity; \
 		return true; \
 	} \
 	\
@@ -170,18 +170,18 @@
 		if (!deque_chunk_func(reserve, TYPE)(p_d, p_d->chunk_count + 1)) return false; \
 		p_d->chunk_begin = (p_d->chunk_begin + p_d->chunk_capacity - 1) % p_d->chunk_capacity; \
 		p_d->chunk_count++; \
-		chunk(TYPE)* target = deque_chunk_front(TYPE, p_d); \
-		target->begin = 0; \
-		target->size = 0; \
+		chunk(TYPE)* p_target = deque_chunk_front(TYPE, p_d); \
+		p_target->begin = 0; \
+		p_target->size = 0; \
 		return true; \
 	} \
 	\
 	bool deque_chunk_func(push_back, TYPE)(deque(TYPE)* p_d) { \
 		if (!deque_chunk_func(reserve, TYPE)(p_d, p_d->chunk_count + 1)) return false; \
 		p_d->chunk_count++; \
-		chunk(TYPE)* target = deque_chunk_back(TYPE, p_d); \
-		target->begin = 0; \
-		target->size = 0; \
+		chunk(TYPE)* p_target = deque_chunk_back(TYPE, p_d); \
+		p_target->begin = 0; \
+		p_target->size = 0; \
 		return true; \
 	} \
 	\
@@ -266,17 +266,17 @@
 		return chunk_func(at, TYPE)(deque_chunk_func(at, TYPE)(p_d, chunk_idx), index); \
 	} \
 	\
-	bool deque_func(resize, TYPE)(deque(TYPE)* p_d, size_t new_size) { \
-		if (new_size > p_d->size) { \
+	bool deque_func(resize, TYPE)(deque(TYPE)* p_d, size_t size) { \
+		if (size > p_d->size) { \
 			TYPE none; \
 			memset(&none, 0, sizeof(TYPE)); \
-			for (size_t i = p_d->size; i < new_size; i++) { \
+			for (size_t i = p_d->size; i < size; i++) { \
 				if (!deque_func(push_back, TYPE)(p_d, none)) return false; \
 			} \
 		} \
-		else if (new_size < p_d->size) { \
-			size_t temp = p_d->size; \
-			for (size_t i = new_size; i < temp; i++) { \
+		else if (size < p_d->size) { \
+			size_t temp_size = p_d->size; \
+			for (size_t i = size; i < temp_size; i++) { \
 				deque_func(pop_back, TYPE)(p_d); \
 			} \
 		} \
