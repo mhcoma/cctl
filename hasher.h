@@ -27,9 +27,7 @@ static inline size_t cctl_hasher_get_generic_string_byte_length(const void* p_da
                 break;
             }
         }
-        if (is_null_terminator) {
-            break;
-        }
+        if (is_null_terminator) break;
         character_count++;
     }
     return character_count * char_size;
