@@ -88,6 +88,71 @@
 		return p_c->p_data + ((p_c->begin + index) % cctl_deque_chunk_max); \
 	}
 
+#define deque_iterator(TYPE) cctl_join(TYPE, deque_iterator)
+#define deque_iterator_func(FUNC, TYPE) cctl_join(deque_iterator(TYPE), FUNC)
+#define deque_iterator_struct(TYPE) cctl_join(deque_iterator(TYPE), struct)
+
+#define deque_iterator_get(TYPE, p_it) deque_func(at, TYPE)((p_it)->p_d, (p_it)->index)
+#define deque_iterator_is_valid(TYPE, p_it) ((p_it)->p_d && (p_it)->index < (p_it)->p_d->size)
+#define deque_iterator_next(TYPE, p_it) ((p_it)->index++)
+#define deque_iterator_prev(TYPE, p_it) ((p_it)->index--)
+
+#define deque_iterator_insert_after(TYPE, p_it, item) deque_iterator_func(insert_after, TYPE)(p_it, item)
+#define deque_iterator_insert_before(TYPE, p_it, item) deque_iterator_func(insert_before, TYPE)(p_it, item)
+#define deque_iterator_remove(TYPE, p_it) deque_iterator_func(remove, TYPE)(p_it)
+
+#define deque_iterator_imp_h(TYPE) \
+	typedef struct deque_iterator_struct(TYPE) deque_iterator(TYPE); \
+	struct deque_iterator_struct(TYPE) { \
+		deque(TYPE)* p_d; \
+		size_t index; \
+	}; \
+	\
+	bool deque_iterator_func(insert_after, TYPE)(deque_iterator(TYPE)* p_it, TYPE item); \
+	bool deque_iterator_func(insert_before, TYPE)(deque_iterator(TYPE)* p_it, TYPE item); \
+	bool deque_iterator_func(remove, TYPE)(deque_iterator(TYPE)* p_it);
+
+#define deque_iterator_imp_c(TYPE) \
+	bool deque_iterator_func(insert_after, TYPE)(deque_iterator(TYPE)* p_it, TYPE item) { \
+		if (!p_it || !deque_iterator_is_valid(TYPE, p_it)) return false; \
+		TYPE none; \
+		memset(&none, 0, sizeof(TYPE)); \
+		if (!deque_func(push_back, TYPE)(p_it->p_d, none)) return false; \
+		for (size_t i = p_it->p_d->size - 1; i > p_it->index + 1; i--) { \
+			TYPE* p_current = deque_func(at, TYPE)(p_it->p_d, i); \
+			TYPE* p_previous = deque_func(at, TYPE)(p_it->p_d, i - 1); \
+			*p_current = *p_previous; \
+		} \
+		*deque_func(at, TYPE)(p_it->p_d, p_it->index + 1) = item; \
+		return true; \
+	} \
+	\
+	bool deque_iterator_func(insert_before, TYPE)(deque_iterator(TYPE)* p_it, TYPE item) { \
+		if (!p_it || !deque_iterator_is_valid(TYPE, p_it)) return false; \
+		TYPE none; \
+		memset(&none, 0, sizeof(TYPE)); \
+		if (!deque_func(push_back, TYPE)(p_it->p_d, none)) return false; \
+		for (size_t i = p_it->p_d->size - 1; i > p_it->index; i--) { \
+			TYPE* p_current = deque_func(at, TYPE)(p_it->p_d, i); \
+			TYPE* p_previous = deque_func(at, TYPE)(p_it->p_d, i - 1); \
+			*p_current = *p_previous; \
+		} \
+		*deque_func(at, TYPE)(p_it->p_d, p_it->index) = item; \
+		p_it->index++;\
+		return true; \
+	} \
+	\
+	bool deque_iterator_func(remove, TYPE)(deque_iterator(TYPE)* p_it) { \
+		if (!p_it || !deque_iterator_is_valid(TYPE, p_it)) return false; \
+		for (size_t i = p_it->index; i < p_it->p_d->size - 1; i++) { \
+			TYPE* p_current = deque_func(at, TYPE)(p_it->p_d, i); \
+			TYPE* p_next = deque_func(at, TYPE)(p_it->p_d, i + 1); \
+			*p_current = *p_next; \
+		} \
+		deque_func(pop_back, TYPE)(p_it->p_d); \
+		return true; \
+	}
+
 #define deque(TYPE) cctl_join(TYPE, deque)
 #define deque_chunk_func(FUNC, TYPE) cctl_join(cctl_join(deque(TYPE), chunk), FUNC)
 #define deque_func(FUNC, TYPE) cctl_join(deque(TYPE), FUNC)
@@ -107,11 +172,18 @@
 #define deque_front(TYPE, p_d) ((p_d)->size ? chunk_front(TYPE, deque_chunk_front(TYPE, p_d)) : NULL)
 #define deque_back(TYPE, p_d) ((p_d)->size ? chunk_back(TYPE, deque_chunk_back(TYPE, p_d)) : NULL)
 
+#define deque_begin(TYPE, p_d) deque_func(begin, TYPE)(p_d)
+#define deque_rbegin(TYPE, p_d) deque_func(rbegin, TYPE)(p_d)
+#define deque_seek(TYPE, p_d, index) deque_func(seek, TYPE)(p_d, index)
+#define deque_foreach(TYPE, p_d, it) for (deque_iterator(TYPE) it = deque_begin(TYPE, p_d); deque_iterator_is_valid(TYPE, &it); deque_iterator_next(TYPE, &it))
+#define deque_rforeach(TYPE, p_d, it) for (deque_iterator(TYPE) it = deque_rbegin(TYPE, p_d); deque_iterator_is_valid(TYPE, &it); deque_iterator_prev(TYPE, &it))
+
 #define deque_fd(TYPE) \
 	typedef struct deque_struct(TYPE) deque(TYPE);
 
 #define deque_imp_h(TYPE) \
 	chunk_imp_h(TYPE); \
+	deque_iterator_imp_h(TYPE); \
 	\
 	struct deque_struct(TYPE) { \
 		chunk(TYPE)* p_data; \
@@ -136,10 +208,14 @@
 	bool deque_func(push_back, TYPE)(deque(TYPE)* p_d, TYPE item); \
 	bool deque_func(pop_front, TYPE)(deque(TYPE)* p_d); \
 	bool deque_func(pop_back, TYPE)(deque(TYPE)* p_d); \
-	TYPE* deque_func(at, TYPE)(deque(TYPE)* p_d, size_t index);
+	TYPE* deque_func(at, TYPE)(deque(TYPE)* p_d, size_t index); \
+	deque_iterator(TYPE) deque_func(begin, TYPE)(deque(TYPE)* p_d); \
+	deque_iterator(TYPE) deque_func(rbegin, TYPE)(deque(TYPE)* p_d); \
+	deque_iterator(TYPE) deque_func(seek, TYPE)(deque(TYPE)* p_d, size_t index);
 
 #define deque_imp_c(TYPE) \
 	chunk_imp_c(TYPE); \
+	deque_iterator_imp_c(TYPE) \
 	\
 	bool deque_chunk_func(reserve, TYPE)(deque(TYPE)* p_d, size_t size) { \
 		if (p_d->chunk_capacity >= size) return true; \
@@ -281,6 +357,21 @@
 			} \
 		} \
 		return true; \
+	} \
+	\
+	deque_iterator(TYPE) deque_func(begin, TYPE)(deque(TYPE)* p_d) { \
+		deque_iterator(TYPE) it = { p_d, 0 }; \
+		return it; \
+	} \
+	\
+	deque_iterator(TYPE) deque_func(rbegin, TYPE)(deque(TYPE)* p_d) { \
+		deque_iterator(TYPE) it = { p_d, p_d->size > 0 ? p_d->size - 1 : (size_t)-1 }; \
+		return it; \
+	} \
+	\
+	deque_iterator(TYPE) deque_func(seek, TYPE)(deque(TYPE)* p_d, size_t index) { \
+		deque_iterator(TYPE) it = { p_d, index < p_d->size ? index : (size_t)-1 }; \
+		return it; \
 	}
 
 #endif
