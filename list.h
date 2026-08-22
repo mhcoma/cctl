@@ -123,7 +123,6 @@
 #define list_rbegin(TYPE, p_l) list_func(rbegin, TYPE)(p_l)
 #define list_end(TYPE, p_l) list_func(end, TYPE)(p_l)
 #define list_seek(TYPE, p_l, index) list_func(seek, TYPE)(p_l, index)
-
 #define list_foreach(TYPE, p_l, it) for(list_iterator(TYPE) it = list_begin(TYPE, p_l); list_iterator_is_valid(TYPE, &it); list_iterator_next(TYPE, &it))
 #define list_rforeach(TYPE, p_l, it) for (list_iterator(TYPE) it = list_rbegin(TYPE, p_l); list_iterator_is_valid(TYPE, &it); list_iterator_prev(TYPE, &it))
 
